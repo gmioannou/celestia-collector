@@ -1,5 +1,7 @@
 {
   "name": "celestia-collector",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

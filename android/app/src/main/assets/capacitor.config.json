@@ -1,0 +1,8 @@
+{
+  "appId": "cy.ac.cut.celestia.collector",
+  "appName": "celestia-collector",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "cordova": {}
+}

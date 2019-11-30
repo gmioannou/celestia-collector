@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">celestia-collector</string>
+    <string name="title_activity_main">celestia-collector</string>
+    <string name="package_name">cy.ac.cut.celestia.collector</string>
+    <string name="custom_url_scheme">cy.ac.cut.celestia.collector</string>
+</resources>
