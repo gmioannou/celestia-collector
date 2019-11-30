@@ -1,8 +1,10 @@
-# Celetia Collector
+# Celestia Collector
 Collect geolocation events with pictures attachments
+This project has been developed within the scope of a master’s degree in Geoinformatics at the Cyprus University of Technology
 
 ## How to deploy
 - npx cap init CelestiaCollector cy.ac.cut.celestia.collector
+- npm install
 - ionic build
 
 ### Add platforms
