@@ -7,7 +7,7 @@ html, body, #map {
 
 #map {
   position: fixed;
-  height: 92vh;
+  height: 91vh;
 }
 
 .photo-thumbnail {
@@ -38,3 +38,9 @@ html, body, #map {
   padding: 10px;
   height: 60px;
 }
+
+.addEventFab {
+  margin-bottom: 20px;
+  margin-right: 2px;
+}
+

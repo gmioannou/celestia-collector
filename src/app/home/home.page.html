@@ -1,13 +1,5 @@
 <ion-toolbar>
   <ion-title>Celestia Collector</ion-title>
-  <ion-buttons slot="secondary">
-    <ion-button color="primary">
-      <ion-icon slot="icon-only" name="contact"></ion-icon>
-    </ion-button>
-    <ion-button color="primary">
-      <ion-icon slot="icon-only" name="search"></ion-icon>
-    </ion-button>
-  </ion-buttons>
   <ion-buttons slot="primary">
     <ion-button color="primary">
       <ion-icon slot="icon-only" name="more"></ion-icon>
@@ -23,16 +15,21 @@
 
   <div id="map" #map>
     <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-      <ion-fab-button (click)="toggleDrawerState()">
+      <ion-fab-button class="addEventFab" (click)="showDrawerState()">
         <ion-icon name="add"></ion-icon>
       </ion-fab-button>
     </ion-fab>
   </div>
 
-  <ion-bottom-drawer id="bottom-sheet" [(state)]=drawerState [(dockedHeight)]=dockedHeight>
+  <ion-bottom-drawer id="bottom-sheet" [(state)]=drawerState [dockedHeight]=dockedHeight>
 
     <div class="drawer-content">
       <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button ion-button color="primary" (click)="hideDrawerState($event)">
+            <ion-icon slot="icon-only" name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
         <ion-title>Capture Event</ion-title>
         <ion-buttons slot="primary">
           <ion-button ion-button color="primary" (click)="takePhoto($event)">
@@ -48,11 +45,13 @@
     <form [formGroup]="eventForm">
       <ion-list>
 
-        <div [ngClass]="{'featureType-thumbnail': true, 'selected': featureType.isSelected}" *ngFor="let featureType of featureLayerDomain">
-          <img (click)="selectFeatureType(featureType)" [src]="'data:image/png;base64,' + featureType.symbol.imageData" />
+        <div [ngClass]="{'featureType-thumbnail': true, 'selected': featureType.isSelected}"
+          *ngFor="let featureType of featureLayerDomain">
+          <img (click)="selectFeatureType(featureType)"
+            [src]="'data:image/png;base64,' + featureType.symbol.imageData" />
         </div>
         <ion-item>
-            <h4>{{featureTypeSelected?.label}}</h4>
+          <h4>{{featureTypeSelected?.label}}</h4>
         </ion-item>
         <ion-item>
           <ion-textarea formControlName="description" placeholder="Description ..." autocorrect></ion-textarea>
