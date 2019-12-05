@@ -15,7 +15,7 @@
 
   <div id="map" #map>
     <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-      <ion-fab-button class="addEventFab" (click)="showDrawerState()">
+      <ion-fab-button class="addEventFab" (click)="showDrawer()">
         <ion-icon name="add"></ion-icon>
       </ion-fab-button>
     </ion-fab>
@@ -26,7 +26,7 @@
     <div class="drawer-content">
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-button ion-button color="primary" (click)="hideDrawerState($event)">
+          <ion-button ion-button color="primary" (click)="hideDrawer($event)">
             <ion-icon slot="icon-only" name="close"></ion-icon>
           </ion-button>
         </ion-buttons>

@@ -121,11 +121,12 @@ export class HomePage implements OnInit {
       await this.mapViewService.captureEvent(this.eventForm, this.photoList)
 
       // reset event form and list of photos
+      this.selectFeatureType(this.featureLayerDomain[0])
       this.eventForm.reset()
       this.photoList = []
       this.photoListPreview = []
 
-      this.hideDrawerState()
+      this.hideDrawer()
 
     }
     catch (e) {
@@ -157,12 +158,12 @@ export class HomePage implements OnInit {
   }
 
   // show drawer (bottom sheet)
-  showDrawerState() {
-    this.drawerState = DrawerState.Docked
+  showDrawer() {
+    this.drawerState = DrawerState.Top
   }
 
   // hide drawer (bottom sheet)
-  hideDrawerState() {
+  hideDrawer() {
     this.drawerState = DrawerState.Bottom
   }
 
