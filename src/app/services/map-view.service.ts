@@ -63,6 +63,10 @@ export class MapViewService {
             label: "Description"
           },
           {
+            fieldName: "instructions",
+            label: "Instructions"
+          },
+          {
             fieldName: "status",
             label: "Status"
           },
@@ -85,6 +89,14 @@ export class MapViewService {
           {
             fieldName: "accuracy",
             label: "Accuracy"
+          },
+          {
+            fieldName: "created_date",
+            label: "Date"
+          },
+          {
+            fieldName: "created_user",
+            label: "Username"
           }
         ]
       }
@@ -138,15 +150,15 @@ export class MapViewService {
       mapView.ui.add(locateWidget, "top-left");
 
       // trackWidget
-      var trackWidget = new Track({
-        view: mapView,
-        useHeadingEnabled: false,  // Change orientation of the map
-        goToOverride: function (view, options) {
-          options.target.scale = 1500;  // Override the default map scale
-          return view.goTo(options.target);
-        }
-      });
-      mapView.ui.add(trackWidget, "top-left");
+      // var trackWidget = new Track({
+      //   view: mapView,
+      //   useHeadingEnabled: false,  // Change orientation of the map
+      //   goToOverride: function (view, options) {
+      //     options.target.scale = 1500;  // Override the default map scale
+      //     return view.goTo(options.target);
+      //   }
+      // });
+      // mapView.ui.add(trackWidget, "top-left");
 
       // compassWidget
       var compassWidget = new Compass({

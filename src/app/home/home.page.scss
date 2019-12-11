@@ -28,6 +28,8 @@ html, body, #map {
 .featureType-thumbnail {
   position: relative;
   display: inline-block;
+  padding: 1px;
+  width: 60px;
 } 
 
 .featureType-thumbnail.selected {
@@ -35,12 +37,17 @@ html, body, #map {
 } 
 
 .featureType-thumbnail img {
-  padding: 10px;
-  height: 60px;
+  width: 70px;
+}
+
+.featureType-thumbnail p {
+  text-align: center;
+  font-size: 10px;
+  margin-top: 0px;
 }
 
 .addEventFab {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   margin-right: 2px;
 }
 

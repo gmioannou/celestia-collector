@@ -6,6 +6,8 @@ import { RouterModule } from '@angular/router';
 import { IonBottomDrawerModule } from 'ion-bottom-drawer';
 
 import { HomePage } from './home.page';
+import { PopoverComponent } from '../popover/popover.component';
+import { AboutComponent } from '../about/about.component';
 
 @NgModule({
   imports: [
@@ -21,6 +23,7 @@ import { HomePage } from './home.page';
       }
     ])
   ],
-  declarations: [HomePage]
+  declarations: [HomePage, PopoverComponent, AboutComponent],
+  entryComponents: [PopoverComponent, AboutComponent]
 })
 export class HomePageModule {}

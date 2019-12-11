@@ -1,7 +1,7 @@
 <ion-toolbar>
   <ion-title>Celestia Collector</ion-title>
   <ion-buttons slot="primary">
-    <ion-button color="primary">
+    <ion-button color="primary" (click)="presentPopover($event)">
       <ion-icon slot="icon-only" name="more"></ion-icon>
     </ion-button>
   </ion-buttons>
@@ -15,7 +15,7 @@
 
   <div id="map" #map>
     <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-      <ion-fab-button class="addEventFab" (click)="showDrawer()">
+      <ion-fab-button [hidden]=loading class="addEventFab" (click)="showDrawer()">
         <ion-icon name="add"></ion-icon>
       </ion-fab-button>
     </ion-fab>
@@ -45,14 +45,10 @@
     <form [formGroup]="eventForm">
       <ion-list>
 
-        <div [ngClass]="{'featureType-thumbnail': true, 'selected': featureType.isSelected}"
-          *ngFor="let featureType of featureLayerDomain">
-          <img (click)="selectFeatureType(featureType)"
-            [src]="'data:image/png;base64,' + featureType.symbol.imageData" />
+        <div [ngClass]="{'featureType-thumbnail': true, 'selected': featureType.isSelected}" *ngFor="let featureType of featureLayerDomain">
+          <img (click)="selectFeatureType(featureType)" [src]="'data:image/png;base64,' + featureType.symbol.imageData" />
+          <p>{{featureType?.label}}</p> 
         </div>
-        <ion-item>
-          <h4>{{featureTypeSelected?.label}}</h4>
-        </ion-item>
         <ion-item>
           <ion-textarea formControlName="description" placeholder="Description ..." autocorrect></ion-textarea>
         </ion-item>

@@ -4,7 +4,9 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { Plugins, CameraResultType, CameraSource, SplashScreen } from '@capacitor/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MapViewService } from '../services/map-view.service';
-import { Platform } from '@ionic/angular';
+import { Platform, AlertController, PopoverController, ModalController } from '@ionic/angular';
+import { PopoverComponent } from '../popover/popover.component'
+import { AboutComponent } from '../about/about.component';
 
 @Component({
   selector: 'app-home',
@@ -28,22 +30,67 @@ export class HomePage implements OnInit {
   loading: boolean = false
   subscribe: any;
 
+  // define events form
+  eventForm: FormGroup = this.formBuilder.group({
+    hazard_type: new FormControl(["", Validators.required]),
+    description: new FormControl(""),
+    longitude: new FormControl(""),
+    latitude: new FormControl(""),
+    altitude: new FormControl(""),
+    accuracy: new FormControl(""),
+  });
+
   constructor(
     private formBuilder: FormBuilder,
     private sanitizer: DomSanitizer,
     private mapViewService: MapViewService,
-    private platform: Platform) { }
+    private platform: Platform,
+    private alertController: AlertController,
+    private popoverController: PopoverController,
+    private modalController: ModalController) { }
 
   ionViewDidEnter() {
     this.subscribe = this.platform.backButton.subscribe(() => {
-      if (window.confirm("Are you sure you want to quit?")){
-        navigator["app"].exitApp();
-      }
+      this.exitApp()
     });
   }
 
   ionViewWillLeave() {
     this.subscribe.unsubscribe();
+  }
+
+  exitApp(){
+    if (window.confirm("Are you sure you want to quit?")) {
+      navigator["app"].exitApp();
+    }
+  }
+
+  async presentPopover(ev: any) {
+    let menuOption
+    const popover = await this.popoverController.create({
+      component: PopoverComponent,
+      event: ev,
+      translucent: true
+    });
+    await popover.present();
+
+    popover.onDidDismiss().then(res => {
+      menuOption = res.data['item']
+      switch(menuOption) {
+        case "Login":
+          this.presentAlert("This feature is under development!")
+          break;
+        case "About":
+          this.presentAlert(`
+            <p>Developed by George Ioannou as part of master’s degree in Geoinformatics</p>             
+            <p>Crowdsourcing Application for collecting data for Natural Hazard Events in the field</p>
+            <p>&copy 2019, Cyprus University of Technology</p>`)          
+          break;
+        case "Exit":
+          this.exitApp()
+      }
+    });
+
   }
 
   async ngOnInit() {
@@ -74,7 +121,7 @@ export class HomePage implements OnInit {
       });
 
       let copyrightElement = document.getElementsByClassName("esri-attribution__powered-by")
-      copyrightElement[0].innerHTML = "© 2019 Cyprus University of Technology"
+      copyrightElement[0].innerHTML = "&copy 2019, Cyprus University of Technology"
 
       // select the first element of the list
       this.selectFeatureType(this.featureLayerDomain[0])
@@ -90,16 +137,6 @@ export class HomePage implements OnInit {
     }
   }
 
-  // define events form
-  eventForm: FormGroup = this.formBuilder.group({
-    hazard_type: new FormControl(""),
-    description: new FormControl(""),
-    longitude: new FormControl(""),
-    latitude: new FormControl(""),
-    altitude: new FormControl(""),
-    accuracy: new FormControl(""),
-  });
-
   // update form control based on user selection
   selectFeatureType(featureType) {
     this.eventForm.controls['hazard_type'].setValue(featureType.value);
@@ -114,6 +151,11 @@ export class HomePage implements OnInit {
 
   // capture new event
   async captureEvent() {
+
+    if (this.photoList.length == 0) {
+      this.presentAlert("Please add pictures!")
+      return
+    }
 
     try {
       this.loading = true
@@ -167,5 +209,15 @@ export class HomePage implements OnInit {
     this.drawerState = DrawerState.Bottom
   }
 
+  // present modal alert
+  async presentAlert(message: string) {
+    const alert = await this.alertController.create({
+      header: 'Celestia Collector',
+      message: message,
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
 
 }

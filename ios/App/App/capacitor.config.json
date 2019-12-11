@@ -1,12 +1,20 @@
 {
   "appId": "cy.ac.cut.celestia.collector",
-  "appName": "celestia-collector",
+  "appName": "Celestia Collector",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
   "cordova": {},
   "plugins": {
     "SplashScreen": {
+      "launchShowDuration": 4000,
+      "launchAutoHide": true,
+      "backgroundColor": "#ffffffff",
+      "androidSplashResourceName": "splash",
+      "androidScaleType": "CENTER_CROP",
+      "androidSpinnerStyle": "large",
+      "iosSpinnerStyle": "small",
+      "spinnerColor": "#0000FF",
       "showSpinner": true
     }
   }
