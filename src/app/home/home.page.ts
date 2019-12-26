@@ -4,9 +4,9 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { Plugins, CameraResultType, CameraSource, SplashScreen } from '@capacitor/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MapViewService } from '../services/map-view.service';
-import { Platform, AlertController, PopoverController, ModalController } from '@ionic/angular';
-import { PopoverComponent } from '../popover/popover.component'
-import { AboutComponent } from '../about/about.component';
+import { Platform, AlertController, PopoverController, NavController } from '@ionic/angular';
+import { PopoverComponent } from '../popover/popover.component';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -32,22 +32,24 @@ export class HomePage implements OnInit {
 
   // define events form
   eventForm: FormGroup = this.formBuilder.group({
-    hazard_type: new FormControl(["", Validators.required]),
+    hazard_type: new FormControl("", Validators.required),
     description: new FormControl(""),
     longitude: new FormControl(""),
     latitude: new FormControl(""),
     altitude: new FormControl(""),
     accuracy: new FormControl(""),
+    collected_user: new FormControl("", Validators.required),
   });
 
   constructor(
     private formBuilder: FormBuilder,
     private sanitizer: DomSanitizer,
     private mapViewService: MapViewService,
+    private authService: AuthService,
     private platform: Platform,
     private alertController: AlertController,
     private popoverController: PopoverController,
-    private modalController: ModalController) { }
+    private navController: NavController) { }
 
   ionViewDidEnter() {
     this.subscribe = this.platform.backButton.subscribe(() => {
@@ -66,7 +68,6 @@ export class HomePage implements OnInit {
   }
 
   async presentPopover(ev: any) {
-    let menuOption
     const popover = await this.popoverController.create({
       component: PopoverComponent,
       event: ev,
@@ -74,26 +75,10 @@ export class HomePage implements OnInit {
     });
     await popover.present();
 
-    popover.onDidDismiss().then(res => {
-      menuOption = res.data['item']
-      switch(menuOption) {
-        case "Login":
-          this.presentAlert("This feature is under development!")
-          break;
-        case "About":
-          this.presentAlert(`
-            <p>Developed by George Ioannou as part of master’s degree in Geoinformatics</p>             
-            <p>Crowdsourcing Application for collecting data for Natural Hazard Events in the field</p>
-            <p>&copy 2019, Cyprus University of Technology</p>`)          
-          break;
-        case "Exit":
-          this.exitApp()
-      }
-    });
-
   }
 
   async ngOnInit() {
+    await this.authService.init_login();
 
     // show splash screen
     SplashScreen.show({
@@ -200,8 +185,14 @@ export class HomePage implements OnInit {
   }
 
   // show drawer (bottom sheet)
-  showDrawer() {
-    this.drawerState = DrawerState.Top
+  async showDrawer() {
+    if (this.authService.login_user) {
+      this.eventForm.controls['collected_user'].setValue(this.authService.login_user.email);
+      this.drawerState = DrawerState.Top
+    }
+    else {
+      this.navController.navigateForward("/login")
+    }
   }
 
   // hide drawer (bottom sheet)

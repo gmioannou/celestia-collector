@@ -1,11 +1,13 @@
-<ion-toolbar>
-  <ion-title>Celestia Collector</ion-title>
-  <ion-buttons slot="primary">
-    <ion-button color="primary" (click)="presentPopover($event)">
-      <ion-icon slot="icon-only" name="more"></ion-icon>
-    </ion-button>
-  </ion-buttons>
-</ion-toolbar>
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Celestia Collector</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button color="primary" (click)="presentPopover($event)">
+        <ion-icon slot="icon-only" name="more"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
 
@@ -50,7 +52,8 @@
           <p>{{featureType?.label}}</p> 
         </div>
         <ion-item>
-          <ion-textarea formControlName="description" placeholder="Description ..." autocorrect></ion-textarea>
+          <ion-label position="floating">Notes</ion-label>
+          <ion-textarea formControlName="description" autocorrect></ion-textarea>
         </ion-item>
 
         <div class="photo-thumbnail" *ngFor="let photo of photoListPreview; let idx = index">

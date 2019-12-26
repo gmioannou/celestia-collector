@@ -95,8 +95,8 @@ export class MapViewService {
             label: "Date"
           },
           {
-            fieldName: "created_user",
-            label: "Username"
+            fieldName: "collected_user",
+            label: "Collected by"
           }
         ]
       }
@@ -201,6 +201,7 @@ export class MapViewService {
 
     //convert eventForm to data
     const eventFormData = eventForm.value;
+    console.log(eventFormData);
 
     // prepare the event position object
     let eventPosition = [{

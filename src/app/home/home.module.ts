@@ -4,10 +4,8 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonBottomDrawerModule } from 'ion-bottom-drawer';
-
 import { HomePage } from './home.page';
 import { PopoverComponent } from '../popover/popover.component';
-import { AboutComponent } from '../about/about.component';
 
 @NgModule({
   imports: [
@@ -23,7 +21,7 @@ import { AboutComponent } from '../about/about.component';
       }
     ])
   ],
-  declarations: [HomePage, PopoverComponent, AboutComponent],
-  entryComponents: [PopoverComponent, AboutComponent]
+  declarations: [HomePage, PopoverComponent],
+  entryComponents: [PopoverComponent]
 })
 export class HomePageModule {}
