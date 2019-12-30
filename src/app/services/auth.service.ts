@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
 
-const BASE_URL = "http://celestia.cut.ac.cy:5000/api"
+const BASE_URL = "http://173.212.224.231:8081/api"
 
 @Injectable({
   providedIn: 'root'
@@ -15,13 +15,15 @@ export class AuthService {
   async login(userData) {
     try {
       const res = await axios.post(BASE_URL + '/users/login', userData)
+      console.log("Signin response: ", res)
+
       if (res.status == 200) {
         localStorage.setItem('bearer_token', res.data);
       } else {
         localStorage.removeItem('bearer_token');
       }
     } catch(err) {
-      console.log(err)
+      console.log("IO", err.message)
     } finally {
       await this.init_login();
     }
@@ -30,11 +32,9 @@ export class AuthService {
   async register(userData) {
     try {
       const res = await axios.post(BASE_URL + '/users/register', userData)
-      if (res.status == 200) {
-        console.log("-->>", res)
-      }
+      console.log("Register response: ", res)
     } catch (err) {
-      console.log(err)
+      console.log(err.message)
     }
 
   }
