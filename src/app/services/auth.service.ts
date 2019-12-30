@@ -42,7 +42,7 @@ export class AuthService {
   delay(num) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve("success")
+        resolve("Success")
       }, num)
     })
   }
