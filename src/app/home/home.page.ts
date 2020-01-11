@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { IonBottomDrawerModule, DrawerState } from 'ion-bottom-drawer';
+import { DrawerState } from 'ion-bottom-drawer';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Plugins, CameraResultType, CameraSource, SplashScreen } from '@capacitor/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';

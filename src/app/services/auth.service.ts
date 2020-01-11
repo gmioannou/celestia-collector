@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import axios from 'axios';
 
 const BASE_URL = "http://173.212.224.231:8081/api"
+// const BASE_URL = "http://localhost:8081/api"
 
 @Injectable({
   providedIn: 'root'
@@ -15,15 +16,15 @@ export class AuthService {
   async login(userData) {
     try {
       const res = await axios.post(BASE_URL + '/users/login', userData)
-      console.log("Signin response: ", res)
-
+      const token = res.data
+      
       if (res.status == 200) {
-        localStorage.setItem('bearer_token', res.data);
+        localStorage.setItem('bearer_token', 'Bearer ' + token);
       } else {
         localStorage.removeItem('bearer_token');
       }
     } catch(err) {
-      console.log("IO", err.message)
+      console.log(err.message)
     } finally {
       await this.init_login();
     }
