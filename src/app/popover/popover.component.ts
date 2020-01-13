@@ -10,8 +10,8 @@ import { AuthService } from '../services/auth.service';
 export class PopoverComponent implements OnInit {
 
   constructor(public popoverController: PopoverController, 
+    public authService: AuthService,
     private alertController:AlertController, 
-    private authService: AuthService,
     private navController: NavController) {
   }
   
@@ -34,7 +34,7 @@ export class PopoverComponent implements OnInit {
     this.presentAlert(`
       <p>Developed by George Ioannou as part of master’s degree in Geoinformatics.</p>             
       <p>Crowdsourcing Application for collecting data related to <strong>Natural Hazards</strong> in the field.</p>
-      <p>&copy 2019, Cyprus University of Technology</p>`)
+      <p>&copy 2019, Cyprus University of Technology</p> Version 1.2`)
     this.popoverController.dismiss();
 
   }

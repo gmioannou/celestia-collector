@@ -1,21 +1,23 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
+import { environment } from '../../environments/environment';
 
-const BASE_URL = "http://173.212.224.231:8081/api"
-// const BASE_URL = "http://localhost:8081/api"
+const authUrl = environment.authUrl
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor() { }
+  constructor() { 
+    console.log(environment.message)
+  }
 
   login_user: any = null;
 
   async login(userData) {
     try {
-      const res = await axios.post(BASE_URL + '/users/login', userData)
+      const res = await axios.post(authUrl + '/users/login', userData)
       const token = res.data
       
       if (res.status == 200) {
@@ -32,7 +34,7 @@ export class AuthService {
 
   async register(userData) {
     try {
-      const res = await axios.post(BASE_URL + '/users/register', userData)
+      const res = await axios.post(authUrl + '/users/register', userData)
       console.log("Register response: ", res)
     } catch (err) {
       console.log(err.message)
@@ -49,15 +51,14 @@ export class AuthService {
   }
   
   async init_login(){
-    console.log('init login')
     const stored_token = localStorage.getItem('bearer_token');
     if (stored_token) {
       const headers = {Authorization: stored_token}
-      const res = await axios.post(BASE_URL + '/users/', {}, {headers: headers});
+      const res = await axios.post(authUrl + '/users/', {}, {headers: headers});
       this.login_user = res.data;
-      console.log(this.login_user);
+      console.log('Signin', this.login_user.email);
     } else {
-      console.log('not login')
+      console.log('Signout')
       this.login_user = null;
     }
   }

@@ -4,22 +4,24 @@ import { Platform } from '@ionic/angular';
 import { GeolocationOptions, Geolocation } from '@capacitor/core';
 import axios from 'axios'
 import formurlencoded from 'form-urlencoded';
+import { environment } from '../../environments/environment';
 
-const featureLayerUrl_edit = "https://celestia.cut.ac.cy/server/rest/services/NaturalHazards/FeatureServer/0"
-const featureLayerUrl = "https://celestia.cut.ac.cy/server/rest/services/NaturalHazards/MapServer/0"
+// service layers
+const featureServiceUrl = environment.serviceUrl + "/FeatureServer/0";
+const mapServiceUrl = environment.serviceUrl + "/MapServer/0";
 
 @Injectable({
   providedIn: 'root'
 })
 export class MapViewService {
 
-  featureLayer: any
-
   constructor(public platform: Platform) { }
-
+  
+  featureLayer: any = null
+  
   getFetureLayerDescriptor() {
     let featureLayerDescriptor: any
-    featureLayerDescriptor = axios.get(featureLayerUrl + "?f=json")
+    featureLayerDescriptor = axios.get(mapServiceUrl + "?f=json")
 
     return featureLayerDescriptor
   }
@@ -118,7 +120,7 @@ export class MapViewService {
 
       // create the feature layer object
       let featureLayer = new FeatureLayer({
-        url: featureLayerUrl,
+        url: mapServiceUrl,
         popupTemplate: template
       });
       this.featureLayer = featureLayer
@@ -149,17 +151,6 @@ export class MapViewService {
       });
       mapView.ui.add(locateWidget, "top-left");
 
-      // trackWidget
-      // var trackWidget = new Track({
-      //   view: mapView,
-      //   useHeadingEnabled: false,  // Change orientation of the map
-      //   goToOverride: function (view, options) {
-      //     options.target.scale = 1500;  // Override the default map scale
-      //     return view.goTo(options.target);
-      //   }
-      // });
-      // mapView.ui.add(trackWidget, "top-left");
-
       // compassWidget
       var compassWidget = new Compass({
         view: mapView
@@ -183,7 +174,7 @@ export class MapViewService {
 
   }
 
-  // create the new event position and send it to the backend for storage
+  // create the new hazard event position and send it to the backend for storage
   async captureEvent(eventForm, photoList) {
 
     // get current device position
@@ -218,7 +209,7 @@ export class MapViewService {
 
     // execute the post request - create event
     try {
-      const res = await axios.post(featureLayerUrl_edit + "/applyEdits", eventPositionEncodedStr, {
+      const res = await axios.post(featureServiceUrl + "/applyEdits", eventPositionEncodedStr, {
         headers: {
           'content-type': 'application/x-www-form-urlencoded;'
         }
@@ -236,7 +227,7 @@ export class MapViewService {
           formData.append("attachment", new File([img], Date.now().toString() + ".png", { type: "image/png", lastModified: Date.now() }))
 
           // post request for the attachments - creare photo attachment
-          await axios.post(featureLayerUrl_edit + '/' + objectID + "/addAttachment", formData, {
+          await axios.post(featureServiceUrl + '/' + objectID + "/addAttachment", formData, {
             headers: {
               'content-type': 'multipart/form-data'
             }

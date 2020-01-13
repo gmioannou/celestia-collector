@@ -28,16 +28,16 @@
     <div class="drawer-content">
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-button ion-button color="primary" (click)="hideDrawer($event)">
+          <ion-button ion-button color="primary" (click)="hideDrawer()">
             <ion-icon slot="icon-only" name="close"></ion-icon>
           </ion-button>
         </ion-buttons>
         <ion-title>Capture Event</ion-title>
         <ion-buttons slot="primary">
-          <ion-button ion-button color="primary" (click)="takePhoto($event)">
+          <ion-button ion-button color="primary" (click)="takePhoto()">
             <ion-icon slot="icon-only" name="camera"></ion-icon>
           </ion-button>
-          <ion-button ion-button color="primary" [disabled]="!eventForm.valid" (click)="captureEvent($event)">
+          <ion-button ion-button color="primary" [disabled]="!eventForm.valid" (click)="captureEvent()">
             <ion-icon slot="icon-only" name="send"></ion-icon>
           </ion-button>
         </ion-buttons>
