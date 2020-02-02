@@ -31,10 +31,14 @@ export class RegisterComponent implements OnInit {
   async registerClick(){
     if (this.registerForm.valid){
       const userData = this.registerForm.value;
-      await this.authService.register(userData);
-      this.navController.navigateBack('/home');
-      console.log("Account created")
-    }else {
+      if (await this.authService.register(userData)) {
+        this.navController.navigateBack('/home');
+        console.log("Account created")
+      }
+      else {
+        console.log("Unable to register")
+      }
+    } else {
       console.log("invalid form...")
     }
   }
